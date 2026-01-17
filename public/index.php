@@ -117,6 +117,10 @@ switch ($action) {
     case 'remove_wishlist':
     $wishlistController->remove();
     break;
+    // --- SEARCH ROUTE ---
+    case 'search':
+        $gameController->search();
+        break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";

@@ -27,11 +27,19 @@
                 <a href="index.php?action=register">Register</a>
             <?php endif; ?>
         </div>
-    </nav>
-
-    <div class="container">
-        <h2>Latest Games</h2>
-
+    </nav>  
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <h2><?php echo isset($search_title) ? $search_title : 'Latest Games'; ?></h2>
+        
+        <form action="index.php" method="GET" style="margin: 0; box-shadow: none; padding: 0; background: none;">
+            <input type="hidden" name="action" value="search">
+            <input type="text" name="q" placeholder="Search games..." required style="padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px;">
+            <button type="submit" style="padding: 8px 15px;">Search</button>
+            <?php if(isset($_GET['q'])): ?>
+                <a href="index.php?action=home" style="margin-left: 10px; color: red; text-decoration: none;">Clear</a>
+            <?php endif; ?>
+        </form>
+    </div>
         <div class="game-grid">
             <?php if(isset($games) && count($games) > 0): ?>
                 <?php foreach($games as $game): ?>
