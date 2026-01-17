@@ -125,5 +125,44 @@ class AuthController {
         header("Location: index.php?action=login");
         exit;
     }
+    // Add this to app/controllers/AuthController.php
+
+    // 1. Show Profile Page
+    public function profile() {
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+
+        $database = new Database();
+        $db = $database->getConnection();
+        $userModel = new User($db);
+        
+        $user = $userModel->getUserById($_SESSION['user_id']);
+
+        include __DIR__ . '/../views/auth/profile.php';
+    }
+
+    // 2. Update Profile
+    public function updateProfile() {
+        if (!isset($_SESSION['user_id'])) die("Access Denied");
+
+        $id = $_SESSION['user_id'];
+        $full_name = $_POST['full_name'];
+        $email = $_POST['email'];
+        $password = !empty($_POST['password']) ? $_POST['password'] : null;
+
+        $database = new Database();
+        $db = $database->getConnection();
+        $userModel = new User($db);
+
+        if ($userModel->updateProfile($id, $full_name, $email, $password)) {
+            // Update Session Name immediately so the navbar updates
+            $_SESSION['full_name'] = $full_name;
+            header("Location: index.php?action=profile&msg=updated");
+        } else {
+            echo "Profile update failed.";
+        }
+    }
 }
 ?>

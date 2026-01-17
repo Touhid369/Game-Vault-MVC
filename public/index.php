@@ -93,6 +93,13 @@ switch ($action) {
     case 'update_game':
         $gameController->updateGame();
         break;
+    // --- PROFILE ROUTES ---
+    case 'profile':
+        $auth->profile();
+        break;
+    case 'update_profile':
+        $auth->updateProfile();
+        break;
 
     // --- DEFAULT ---
     default:

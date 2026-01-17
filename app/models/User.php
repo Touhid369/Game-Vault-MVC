@@ -80,5 +80,38 @@ class User {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+    // Add this to app/models/User.php
+
+    // Get User by ID
+    public function getUserById($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Update Profile
+    public function updateProfile($id, $full_name, $email, $password = null) {
+        if($password) {
+            // Update with new password
+            $query = "UPDATE " . $this->table . " SET full_name = :name, email = :email, password = :pwd WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            
+            // Hash the new password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt->bindParam(':pwd', $hashed_password);
+        } else {
+            // Update without changing password
+            $query = "UPDATE " . $this->table . " SET full_name = :name, email = :email WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+        }
+
+        $stmt->bindParam(':name', $full_name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $id);
+
+        return $stmt->execute();
+    }
 }
 ?>

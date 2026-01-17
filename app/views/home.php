@@ -11,7 +11,7 @@
         <div>
             <?php if(isset($_SESSION['user_id'])): ?>
                 <span>Welcome, <?php echo $_SESSION['full_name']; ?> (<?php echo ucfirst($_SESSION['role']); ?>)</span>
-                
+                <a href="index.php?action=profile" style="font-size: 0.9em; text-decoration: underline;">(Edit Profile)</a>
                 <?php if($_SESSION['role'] == 'seller'): ?>
                     <a href="index.php?action=seller_dashboard">Dashboard</a>
                     <a href="index.php?action=upload">Upload Game</a>
