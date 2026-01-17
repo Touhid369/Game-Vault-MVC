@@ -112,6 +112,23 @@ public function delete($id) {
 
         return $stmt->execute();
     }
-
+// Add this to app/models/Game.php
+    
+    // Search games by title
+    public function search($keyword) {
+        // Use SQL 'LIKE' for partial matches
+        $query = "SELECT * FROM " . $this->table . " 
+                  WHERE is_approved = 1 AND title LIKE :keyword 
+                  ORDER BY created_at DESC";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        // Add % symbols for partial match (e.g., "Mario" matches "Super Mario Bros")
+        $keyword = "%{$keyword}%";
+        
+        $stmt->bindParam(':keyword', $keyword);
+        $stmt->execute();
+        return $stmt;
+    }
 }
 ?>

@@ -300,5 +300,28 @@ class GameController {
             echo "Update failed.";
         }
     }
+    // Add this to app/controllers/GameController.php
+
+    public function search() {
+        $keyword = isset($_GET['q']) ? $_GET['q'] : '';
+        
+        $database = new Database();
+        $db = $database->getConnection();
+        $gameModel = new Game($db);
+
+        if ($keyword) {
+            $stmt = $gameModel->search($keyword);
+            $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $search_title = "Search Results for: '" . htmlspecialchars($keyword) . "'";
+        } else {
+            // If empty search, show all
+            $stmt = $gameModel->readAll();
+            $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $search_title = "All Games";
+        }
+
+        // Reuse the home view but with filtered results
+        include __DIR__ . '/../views/home.php';
+    }
 }
 ?>
