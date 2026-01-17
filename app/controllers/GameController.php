@@ -2,6 +2,7 @@
 include_once __DIR__ . '/../config/Database.php';
 include_once __DIR__ . '/../models/Game.php';
 include_once __DIR__ . '/../models/Order.php';
+include_once __DIR__ . '/../models/Review.php';
 
 class GameController {
 
@@ -193,6 +194,60 @@ class GameController {
             exit;
         } else {
             die("Error: File not found on server.");
+        }
+    }
+    // --- NEW: Game Details & Reviews ---
+    public function details() {
+        if (!isset($_GET['id'])) die("Game ID missing");
+        $game_id = $_GET['id'];
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        // 1. Get Game Info
+        $query = "SELECT * FROM games WHERE id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $game_id);
+        $stmt->execute();
+        $game = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!$game) die("Game not found");
+
+        // 2. Get Reviews
+        $reviewModel = new Review($db);
+        $reviewsStmt = $reviewModel->getReviewsByGame($game_id);
+        $reviews = $reviewsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // 3. Check if User Bought It (To allow reviewing)
+        $orderModel = new Order($db);
+        $hasBought = $orderModel->hasBought($user_id, $game_id);
+
+        include __DIR__ . '/../views/game_details.php';
+    }
+
+    public function submitReview() {
+        if (!isset($_SESSION['user_id'])) die("Please login");
+        
+        $user_id = $_SESSION['user_id'];
+        $game_id = $_POST['game_id'];
+        $rating = $_POST['rating'];
+        $comment = $_POST['comment'];
+
+        $database = new Database();
+        $db = $database->getConnection();
+        $order = new Order($db);
+
+        // Security: Must buy to review
+        if (!$order->hasBought($user_id, $game_id)) {
+            die("You must buy the game to review it.");
+        }
+
+        $review = new Review($db);
+        if($review->create($user_id, $game_id, $rating, $comment)) {
+            header("Location: index.php?action=details&id=$game_id");
+        } else {
+            echo "Error submitting review.";
         }
     }
 }

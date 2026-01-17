@@ -79,6 +79,13 @@ switch ($action) {
     case 'download':
         $gameController->download();
         break;
+    // --- REVIEW ROUTES ---
+    case 'details':
+        $gameController->details();
+        break;
+    case 'submit_review':
+        $gameController->submitReview();
+        break;
 
     // --- DEFAULT ---
     default:

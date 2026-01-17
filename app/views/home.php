@@ -45,7 +45,7 @@
                         <?php endif; ?>
 
                         <div class="card-body">
-                            <h3><?php echo $game['title']; ?></h3>
+                        <h3><a href="index.php?action=details&id=<?php echo $game['id']; ?>"><?php echo $game['title']; ?></a></h3>
                             <p class="price">$<?php echo number_format($game['price'], 2); ?></p>
                             
                             <div style="margin-top: 10px;">
