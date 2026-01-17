@@ -52,3 +52,11 @@ CREATE TABLE reviews (
     FOREIGN KEY (buyer_id) REFERENCES users(id),
     FOREIGN KEY (game_id) REFERENCES games(id)
 );
+CREATE TABLE  wishlists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    game_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (game_id) REFERENCES games(id)
+);

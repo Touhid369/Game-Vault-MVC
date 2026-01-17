@@ -62,6 +62,9 @@
                                         <a href="index.php?action=checkout&id=<?php echo $game['id']; ?>">
                                             <button>Buy Now</button>
                                         </a>
+                                        <a href="index.php?action=add_wishlist&id=<?php echo $game['id']; ?>" style="margin-left:5px; color:#e74c3c; font-size:20px; text-decoration:none;" title="Add to Wishlist">
+                                         ❤
+                                        </a>
                                     <?php endif; ?>
                                 <?php else: ?>
                                     <a href="index.php?action=login">

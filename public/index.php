@@ -14,6 +14,13 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'home';
 include_once __DIR__ . '/../app/controllers/AuthController.php';
 include_once __DIR__ . '/../app/controllers/GameController.php';
 include_once __DIR__ . '/../app/controllers/AdminController.php';
+// ... error reporting lines ...
+
+// 1. Include the file FIRST
+include_once __DIR__ . '/../app/controllers/WishlistController.php'; 
+
+// 2. THEN create the object
+$wishlistController = new WishlistController();
 
 // 5. Initialize Controllers
 $auth = new AuthController();
@@ -100,7 +107,16 @@ switch ($action) {
     case 'update_profile':
         $auth->updateProfile();
         break;
-
+     // --- WISHLIST ROUTES ---
+    case 'my_wishlist':
+    $wishlistController->index();
+    break;
+    case 'add_wishlist':
+    $wishlistController->add();
+    break;
+    case 'remove_wishlist':
+    $wishlistController->remove();
+    break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";
