@@ -81,6 +81,37 @@ public function delete($id) {
     $stmt->bindParam(':id', $id);
     return $stmt->execute();
 }
+// Add this to app/models/Game.php
+
+    // Get single game details (Reusable)
+    public function getGameById($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Update Game Details (Text only for now)
+    public function update($id, $title, $description, $price) {
+        $query = "UPDATE " . $this->table . " 
+                  SET title = :title, description = :desc, price = :price 
+                  WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Sanitize
+        $title = htmlspecialchars(strip_tags($title));
+        $description = htmlspecialchars(strip_tags($description));
+        $price = htmlspecialchars(strip_tags($price));
+
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':desc', $description);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':id', $id);
+
+        return $stmt->execute();
+    }
 
 }
 ?>

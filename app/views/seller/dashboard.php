@@ -33,6 +33,7 @@
                     <th>Price</th>
                     <th>Downloads (Demo)</th>
                     <th>Action</th>
+                    <th>update</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +46,10 @@
                             <td>
                                 <button style="background: #e74c3c;">Delete</button>
                             </td>
+                            <td>
+                          <a href="index.php?action=edit_game&id=<?php echo $game['id']; ?>" class="btn" style="background: #f39c12; padding: 5px 10px; font-size: 12px;">Edit</a>
+    
+                           </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

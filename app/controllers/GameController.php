@@ -250,5 +250,55 @@ class GameController {
             echo "Error submitting review.";
         }
     }
+    // Add this to app/controllers/GameController.php
+
+    // 1. Show Edit Form
+    public function edit() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+            die("Access Denied");
+        }
+
+        $id = $_GET['id'];
+        $database = new Database();
+        $db = $database->getConnection();
+        $gameModel = new Game($db);
+        
+        $game = $gameModel->getGameById($id);
+
+        // Security: Ensure this seller owns the game
+        if($game['seller_id'] != $_SESSION['user_id']) {
+            die("Error: You do not own this game.");
+        }
+
+        include __DIR__ . '/../views/seller/edit.php';
+    }
+
+    // 2. Process Update
+    public function updateGame() {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+            die("Access Denied");
+        }
+
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+
+        $database = new Database();
+        $db = $database->getConnection();
+        $gameModel = new Game($db);
+
+        // Double check ownership before updating
+        $existingGame = $gameModel->getGameById($id);
+        if($existingGame['seller_id'] != $_SESSION['user_id']) {
+            die("Error: You do not own this game.");
+        }
+
+        if ($gameModel->update($id, $title, $description, $price)) {
+            header("Location: index.php?action=seller_dashboard&msg=updated");
+        } else {
+            echo "Update failed.";
+        }
+    }
 }
 ?>

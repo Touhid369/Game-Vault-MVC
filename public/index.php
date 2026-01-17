@@ -86,6 +86,13 @@ switch ($action) {
     case 'submit_review':
         $gameController->submitReview();
         break;
+    // --- EDIT ROUTES ---
+    case 'edit_game':
+        $gameController->edit();
+        break;
+    case 'update_game':
+        $gameController->updateGame();
+        break;
 
     // --- DEFAULT ---
     default:
