@@ -71,6 +71,17 @@ class Order {
 
         return $stmt->rowCount() > 0;
     }
+
+    // Get Total Sales for each Game (For Charts)
+    public function getSalesStats() {
+        $query = "SELECT g.title, COUNT(o.id) as total_sales, SUM(o.payment_amount) as total_revenue
+                  FROM orders o
+                  JOIN games g ON o.game_id = g.id
+                  GROUP BY g.title";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
    
 }
 ?>

@@ -12,6 +12,54 @@
             <a href="index.php?action=logout">Logout</a>
         </div>
     </nav>
+    <div class="container" style="margin-bottom: 40px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h2>Revenue Analytics</h2>
+            <canvas id="revenueChart" width="400" height="150"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Get data from PHP
+        const titles = <?php echo json_encode($gameTitles); ?>;
+        const revenues = <?php echo json_encode($gameRevenue); ?>;
+
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar', // You can change to 'pie' or 'line'
+            data: {
+                labels: titles,
+                datasets: [{
+                    label: 'Total Revenue ($)',
+                    data: revenues,
+                    backgroundColor: [
+                        'rgba(52, 152, 219, 0.6)',
+                        'rgba(46, 204, 113, 0.6)',
+                        'rgba(155, 89, 182, 0.6)',
+                        'rgba(241, 196, 15, 0.6)',
+                        'rgba(231, 76, 60, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(52, 152, 219, 1)',
+                        'rgba(46, 204, 113, 1)',
+                        'rgba(155, 89, 182, 1)',
+                        'rgba(241, 196, 15, 1)',
+                        'rgba(231, 76, 60, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
     <div class="container">
         <h2>Manage Games (Approvals)</h2>

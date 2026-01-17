@@ -28,6 +28,7 @@
             <?php endif; ?>
         </div>
     </nav>  
+    <div class="container">
     <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <h2><?php echo isset($search_title) ? $search_title : 'Latest Games'; ?></h2>
         
