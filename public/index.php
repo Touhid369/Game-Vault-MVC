@@ -125,6 +125,9 @@ switch ($action) {
     case 'apply_coupon':
         $gameController->applyCoupon();
         break;
+    case 'admin_delete_game':
+            $adminController->deleteGame();
+        break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";

@@ -65,5 +65,26 @@ class AdminController {
         $user->toggleStatus($id, $status);
         header("Location: index.php?action=admin_dashboard");
     }
+    // Add this inside AdminController class
+
+    public function deleteGame() {
+        // 1. Security Check
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+            die("Access Denied");
+        }
+
+        $id = $_GET['id'];
+        
+        $database = new Database();
+        $db = $database->getConnection();
+        $game = new Game($db);
+
+        // 2. Perform Delete
+        if ($game->delete($id)) {
+            header("Location: index.php?action=admin_dashboard&msg=deleted");
+        } else {
+            echo "Error deleting game.";
+        }
+    }
 }
 ?>

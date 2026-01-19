@@ -3,6 +3,7 @@ class Game {
     private $conn;
     private $table = "games";
 
+    public $id;
     public $seller_id;
     public $title;
     public $description;
@@ -10,22 +11,18 @@ class Game {
     public $image_path;
     public $demo_file_path;
     public $full_file_path;
+    public $is_approved;
+    public $created_at;
 
     public function __construct($db) {
         $this->conn = $db;
     }
-    public function getGamesBySeller($seller_id) {
-        $query = "SELECT * FROM " . $this->table . " WHERE seller_id = :seller_id ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':seller_id', $seller_id);
-        $stmt->execute();
-        return $stmt;
-    }
 
+    // 1. Upload a New Game
     public function create() {
         $query = "INSERT INTO " . $this->table . " 
-                (seller_id, title, description, price, image_path, demo_file_path, full_file_path) 
-                VALUES (:seller_id, :title, :desc, :price, :img, :demo, :full)";
+                (seller_id, title, description, price, image_path, demo_file_path, full_file_path, is_approved) 
+                VALUES (:seller_id, :title, :desc, :price, :img, :demo, :full, 0)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -34,7 +31,6 @@ class Game {
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->price = htmlspecialchars(strip_tags($this->price));
 
-        // Bind
         $stmt->bindParam(':seller_id', $this->seller_id);
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':desc', $this->description);
@@ -48,42 +44,57 @@ class Game {
         }
         return false;
     }
-    // Add this inside your Game class
-public function readAll() {
-    // Select all approved games, newest first
-    // Only show approved games
-    $query = "SELECT * FROM " . $this->table . " WHERE is_approved = 1 ORDER BY created_at DESC";
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute();
-    return $stmt;
-}
-// Add this to Game.php
-// Get all games (Approved & Pending) for Admin
-public function getAllGamesAdmin() {
-    $query = "SELECT * FROM " . $this->table . " ORDER BY is_approved ASC, created_at DESC";
-    $stmt = $this->conn->prepare($query);
-    $stmt->execute();
-    return $stmt;
-}
 
-// Approve a Game
-public function approveGame($id) {
-    $query = "UPDATE " . $this->table . " SET is_approved = 1 WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':id', $id);
-    return $stmt->execute();
-}
+    // 2. Read All Approved Games (Homepage)
+    public function readAll() {
+        $query = "SELECT * FROM " . $this->table . " WHERE is_approved = 1 ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
 
-// Delete a Game
-public function delete($id) {
-    $query = "DELETE FROM " . $this->table . " WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':id', $id);
-    return $stmt->execute();
-}
-// Add this to app/models/Game.php
+    // 3. Search Games (Homepage Search)
+    public function search($keyword) {
+        $query = "SELECT * FROM " . $this->table . " 
+                  WHERE is_approved = 1 AND title LIKE :keyword 
+                  ORDER BY created_at DESC";
+        
+        $stmt = $this->conn->prepare($query);
+        $keyword = "%{$keyword}%";
+        $stmt->bindParam(':keyword', $keyword);
+        $stmt->execute();
+        return $stmt;
+    }
 
-    // Get single game details (Reusable)
+    // 4. Get Games by Seller (Seller Dashboard)
+    public function getGamesBySeller($seller_id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE seller_id = :seller_id ORDER BY created_at DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':seller_id', $seller_id);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // 5. Get ALL Games (Admin Dashboard)
+    public function getAllGamesAdmin() {
+        $query = "SELECT g.id, g.title, g.price, g.is_approved, u.full_name as seller_name 
+                  FROM " . $this->table . " g
+                  JOIN users u ON g.seller_id = u.id
+                  ORDER BY g.created_at DESC";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // 6. Approve Game (Admin)
+    public function approve($id) {
+        $query = "UPDATE " . $this->table . " SET is_approved = 1 WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
+    // 7. Get Single Game Details (Edit / Details Page)
     public function getGameById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -92,7 +103,7 @@ public function delete($id) {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Update Game Details (Text only for now)
+    // 8. Update Game Info (Seller Edit)
     public function update($id, $title, $description, $price) {
         $query = "UPDATE " . $this->table . " 
                   SET title = :title, description = :desc, price = :price 
@@ -100,7 +111,6 @@ public function delete($id) {
 
         $stmt = $this->conn->prepare($query);
 
-        // Sanitize
         $title = htmlspecialchars(strip_tags($title));
         $description = htmlspecialchars(strip_tags($description));
         $price = htmlspecialchars(strip_tags($price));
@@ -112,23 +122,35 @@ public function delete($id) {
 
         return $stmt->execute();
     }
-// Add this to app/models/Game.php
+
+    // 9. Delete Game (Admin)
+   // 9. Delete Game (Smart Delete)
+   public function delete($id) {
+    // Step 1: Delete from Wishlists first
+    $q1 = "DELETE FROM wishlists WHERE game_id = :id";
+    $stmt1 = $this->conn->prepare($q1);
+    $stmt1->bindParam(':id', $id);
+    $stmt1->execute();
+
+    // Step 2: Delete from Reviews
+    $q2 = "DELETE FROM reviews WHERE game_id = :id";
+    $stmt2 = $this->conn->prepare($q2);
+    $stmt2->bindParam(':id', $id);
+    $stmt2->execute();
+
+    // Step 3: Delete from Orders (History)
+    // Note: In a real company, we wouldn't delete orders, but for this project, we must to clear the error.
+    $q3 = "DELETE FROM orders WHERE game_id = :id";
+    $stmt3 = $this->conn->prepare($q3);
+    $stmt3->bindParam(':id', $id);
+    $stmt3->execute();
+
+    // Step 4: NOW delete the Game
+    $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':id', $id);
     
-    // Search games by title
-    public function search($keyword) {
-        // Use SQL 'LIKE' for partial matches
-        $query = "SELECT * FROM " . $this->table . " 
-                  WHERE is_approved = 1 AND title LIKE :keyword 
-                  ORDER BY created_at DESC";
-        
-        $stmt = $this->conn->prepare($query);
-        
-        // Add % symbols for partial match (e.g., "Mario" matches "Super Mario Bros")
-        $keyword = "%{$keyword}%";
-        
-        $stmt->bindParam(':keyword', $keyword);
-        $stmt->execute();
-        return $stmt;
-    }
+    return $stmt->execute();
+}
 }
 ?>
