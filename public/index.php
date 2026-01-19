@@ -121,6 +121,10 @@ switch ($action) {
     case 'search':
         $gameController->search();
         break;
+    // --- COUPON ROUTE ---
+    case 'apply_coupon':
+        $gameController->applyCoupon();
+        break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";
