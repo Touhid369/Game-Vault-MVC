@@ -340,5 +340,32 @@ class GameController {
             die("Error: File not found on server.");
         }
     }
+    // Add this inside GameController.php (maybe near the Edit functions)
+
+    public function delete() {
+        // 1. Security Check
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+            die("Access Denied");
+        }
+
+        $id = $_GET['id'];
+        
+        $database = new Database();
+        $db = $database->getConnection();
+        $gameModel = new Game($db);
+
+        // 2. Check Ownership (Don't let Seller A delete Seller B's game)
+        $game = $gameModel->getGameById($id);
+        if($game['seller_id'] != $_SESSION['user_id']) {
+            die("Error: You do not own this game.");
+        }
+
+        // 3. Delete
+        if ($gameModel->delete($id)) {
+            header("Location: index.php?action=seller_dashboard&msg=deleted");
+        } else {
+            echo "Error deleting game.";
+        }
+    }
 }
 ?>

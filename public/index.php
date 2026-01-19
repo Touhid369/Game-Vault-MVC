@@ -128,6 +128,10 @@ switch ($action) {
     case 'admin_delete_game':
             $adminController->deleteGame();
         break;
+    // --- SELLER DELETE ROUTE ---
+    case 'seller_delete_game':
+        $gameController->delete();
+        break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";

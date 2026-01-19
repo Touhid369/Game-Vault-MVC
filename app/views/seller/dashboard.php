@@ -33,7 +33,7 @@
                     <th>Price</th>
                     <th>Downloads (Demo)</th>
                     <th>Action</th>
-                    <th>update</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -44,12 +44,15 @@
                             <td>$<?php echo $game['price']; ?></td>
                             <td><a href="uploads/demos/<?php echo $game['demo_file_path']; ?>" target="_blank">Test Demo</a></td>
                             <td>
-                                <button style="background: #e74c3c;">Delete</button>
+                            <a href="index.php?action=edit_game&id=<?php echo $game['id']; ?>" class="btn" style="background: #f39c12; padding: 5px 10px; font-size: 12px;">Edit</a>
+                                            
+                             <a href="index.php?action=seller_delete_game&id=<?php echo $game['id']; ?>" 
+                            class="btn" 
+                            style="background: #e74c3c; padding: 5px 10px; font-size: 12px; margin-left: 5px;"
+                            onclick="return confirm('Are you sure? This will remove the game and all its reviews.');">
+                                            Delete
+                            </a>
                             </td>
-                            <td>
-                          <a href="index.php?action=edit_game&id=<?php echo $game['id']; ?>" class="btn" style="background: #f39c12; padding: 5px 10px; font-size: 12px;">Edit</a>
-    
-                           </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
