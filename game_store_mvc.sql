@@ -60,3 +60,13 @@ CREATE TABLE  wishlists (
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (game_id) REFERENCES games(id)
 );
+-- 1. Create the table
+CREATE TABLE IF NOT EXISTS coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL,
+    discount_percent INT NOT NULL,
+    status INT DEFAULT 1
+);
+
+-- 2. Create a test coupon immediately
+INSERT INTO coupons (code, discount_percent) VALUES ('SAVE10', 10), ('MEGA50', 50);
