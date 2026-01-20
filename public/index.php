@@ -132,6 +132,10 @@ switch ($action) {
     case 'seller_delete_game':
         $gameController->delete();
         break;
+    // --- ADMIN USER MANAGEMENT ---
+    case 'toggle_user':
+        $adminController->toggleUser();
+        break;
     // --- DEFAULT ---
     default:
         echo "404 - Page Not Found";

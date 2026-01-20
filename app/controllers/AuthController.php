@@ -12,7 +12,43 @@ class AuthController {
 
     // Show Login Form
     public function login() {
-        include '../app/views/auth/login.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $database = new Database();
+            $db = $database->getConnection();
+            $userModel = new User($db);
+
+            $user = $userModel->login($email, $password);
+
+            if ($user) {
+                // --- NEW: CHECK IF BANNED ---
+                if ($user['is_active'] == 0) {
+                    // Redirect back with error
+                    header("Location: index.php?action=login&error=banned");
+                    exit;
+                }
+
+                // If active, proceed to login
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['full_name'] = $user['full_name'];
+
+                // Redirect based on Role
+                if ($user['role'] === 'admin') {
+                    header("Location: index.php?action=admin_dashboard");
+                } elseif ($user['role'] === 'seller') {
+                    header("Location: index.php?action=seller_dashboard");
+                } else {
+                    header("Location: index.php?action=home");
+                }
+            } else {
+                header("Location: index.php?action=login&error=invalid");
+            }
+        } else {
+            include __DIR__ . '/../views/auth/login.php';
+        }
     }
 
     // Handle Register Logic
