@@ -53,8 +53,25 @@ class AdminController {
         header("Location: index.php?action=admin_dashboard");
     }
 
-    
-    // Add this inside AdminController class
+    public function toggleUser() {
+        // 1. Security Check
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+            die("Access Denied");
+        }
+
+        $id = $_GET['id'];
+
+        $database = new Database();
+        $db = $database->getConnection();
+        $userModel = new User($db);
+
+        // 2. Toggle Status
+        if ($userModel->toggleStatus($id)) {
+            header("Location: index.php?action=admin_dashboard&msg=user_updated");
+        } else {
+            echo "Error updating user.";
+        }
+    }
 
     public function deleteGame() {
         // 1. Security Check
@@ -73,27 +90,6 @@ class AdminController {
             header("Location: index.php?action=admin_dashboard&msg=deleted");
         } else {
             echo "Error deleting game.";
-        }
-    }
-    // Add this inside AdminController class
-
-    public function toggleUser() {
-        // 1. Security Check
-        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-            die("Access Denied");
-        }
-
-        $id = $_GET['id'];
-
-        $database = new Database();
-        $db = $database->getConnection();
-        $userModel = new User($db);
-
-        // 2. Toggle Status
-        if ($userModel->toggleStatus($id)) {
-            header("Location: index.php?action=admin_dashboard&msg=user_updated");
-        } else {
-            echo "Error updating user.";
         }
     }
 }
