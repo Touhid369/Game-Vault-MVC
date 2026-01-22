@@ -1,0 +1,5 @@
+# This file maps incorrect email addresses to the correct ones
+# Format: Correct Name <correct@email.com> Incorrect Name <incorrect@email.com>
+
+# Fix typo in email address (gmai.com -> gmail.com)
+Touhid369 <mtouhid33@gmail.com> Touhid369 <mtouhid33@gmai.com>
