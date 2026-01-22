@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Edit Game</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/edit.css">
 </head>
 <body>
     <nav>

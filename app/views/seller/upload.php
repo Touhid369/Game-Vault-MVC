@@ -2,11 +2,14 @@
 <html>
 <head>
     <title>Upload Game - Seller Dashboard</title>
+    <link rel="stylesheet" href="assets/css/upload.css">
 </head>
 <body>
-    <h2>Upload a New Game</h2>
-    
-    <form action="index.php?action=uploadSubmit" method="POST" enctype="multipart/form-data">
+
+<h1><a href="index.php?action=home">GameStore</a></h1>
+   
+   <form action="index.php?action=uploadSubmit" method="POST" enctype="multipart/form-data">
+       <h2>Upload a New Game</h2>
         
         <label>Game Title:</label><br>
         <input type="text" name="title" required><br><br>

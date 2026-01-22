@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Seller Dashboard</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/sellerDashboard.css">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
             <a href="index.php?action=upload" class="btn"> + Upload New Game</a>
         </div>
 
-        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <div style="background: linear-gradient(145deg, #252538 0%, #2a2a3e 100%) !important; padding: 10px 20px; border-radius: 10px;">
             <h3>Total Earnings: <span style="color: #27ae60;">$<?php echo number_format($totalEarnings, 2); ?></span></h3>
         </div>
 
@@ -33,26 +33,26 @@
                     <th>Price</th>
                     <th>Downloads (Demo)</th>
                     <th>Action</th>
-                    
+                    <th>update</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if(count($myGames) > 0): ?>
                     <?php foreach($myGames as $game): ?>
                         <tr>
-                            <td><?php echo $game['title']; ?></td>
-                            <td>$<?php echo $game['price']; ?></td>
-                            <td><a href="uploads/demos/<?php echo $game['demo_file_path']; ?>" target="_blank">Test Demo</a></td>
-                            <td>
-                            <a href="index.php?action=edit_game&id=<?php echo $game['id']; ?>" class="btn" style="background: #f39c12; padding: 5px 10px; font-size: 12px;">Edit</a>
-                                            
-                             <a href="index.php?action=seller_delete_game&id=<?php echo $game['id']; ?>" 
-                            class="btn" 
-                            style="background: #e74c3c; padding: 5px 10px; font-size: 12px; margin-left: 5px;"
-                            onclick="return confirm('Are you sure? This will remove the game and all its reviews.');">
-                                            Delete
-                            </a>
-                            </td>
+                           <td><?php echo $game['title']; ?></td>
+                           <td>$<?php echo $game['price']; ?></td>
+                           <td><a href="uploads/demos/<?php echo $game['demo_file_path']; ?>" target="_blank">Test Demo</a></td>
+                           <td>
+                              <a href="index.php?action=seller_delete_game&id=<?php echo $game['id']; ?>" 
+                                 onclick="return confirm('Are you sure? This will remove the game and all its reviews.');">
+                                 <button style="background: #e74c3c;">Delete</button>
+                              </a>
+                           </td>
+                           <td>
+                              <a href="index.php?action=edit_game&id=<?php echo $game['id']; ?>" class="btn" style="background: #f39c12; padding: 5px 10px; font-size: 12px;">Edit</a>
+    
+                           </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -61,7 +61,7 @@
             </tbody>
         </table>
 
-        <br><hr><br>
+        <hr>
 
         <h3>My Sales History</h3>
         <table border="1" cellpadding="10" cellspacing="0" width="100%" style="background:white; border-collapse: collapse;">
