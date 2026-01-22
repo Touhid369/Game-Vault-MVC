@@ -87,7 +87,7 @@ class Game {
     }
 
     // 6. Approve Game (Admin)
-    public function approve($id) {
+    public function approveGame($id) {
         $query = "UPDATE " . $this->table . " SET is_approved = 1 WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -105,52 +105,45 @@ class Game {
 
     // 8. Update Game Info (Seller Edit)
     public function update($id, $title, $description, $price) {
-        $query = "UPDATE " . $this->table . " 
-                  SET title = :title, description = :desc, price = :price 
-                  WHERE id = :id";
+      $query = "UPDATE " . $this->table . " 
+               SET title = :title, description = :desc, price = :price 
+               WHERE id = :id";
 
-        $stmt = $this->conn->prepare($query);
+      $stmt = $this->conn->prepare($query);
 
-        $title = htmlspecialchars(strip_tags($title));
-        $description = htmlspecialchars(strip_tags($description));
-        $price = htmlspecialchars(strip_tags($price));
+      $title = htmlspecialchars(strip_tags($title));
+      $description = htmlspecialchars(strip_tags($description));
+      $price = htmlspecialchars(strip_tags($price));
 
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':desc', $description);
-        $stmt->bindParam(':price', $price);
-        $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':title', $title);
+      $stmt->bindParam(':desc', $description);
+      $stmt->bindParam(':price', $price);
+      $stmt->bindParam(':id', $id);
 
-        return $stmt->execute();
+      return $stmt->execute();
     }
 
-    // 9. Delete Game (Admin)
-   // 9. Delete Game (Smart Delete)
    public function delete($id) {
-    // Step 1: Delete from Wishlists first
-    $q1 = "DELETE FROM wishlists WHERE game_id = :id";
-    $stmt1 = $this->conn->prepare($q1);
-    $stmt1->bindParam(':id', $id);
-    $stmt1->execute();
+      $q1 = "DELETE FROM wishlists WHERE game_id = :id";
+      $stmt1 = $this->conn->prepare($q1);
+      $stmt1->bindParam(':id', $id);
+      $stmt1->execute();
 
-    // Step 2: Delete from Reviews
-    $q2 = "DELETE FROM reviews WHERE game_id = :id";
-    $stmt2 = $this->conn->prepare($q2);
-    $stmt2->bindParam(':id', $id);
-    $stmt2->execute();
+      $q2 = "DELETE FROM reviews WHERE game_id = :id";
+      $stmt2 = $this->conn->prepare($q2);
+      $stmt2->bindParam(':id', $id);
+      $stmt2->execute();
 
-    // Step 3: Delete from Orders (History)
-    // Note: In a real company, we wouldn't delete orders, but for this project, we must to clear the error.
-    $q3 = "DELETE FROM orders WHERE game_id = :id";
-    $stmt3 = $this->conn->prepare($q3);
-    $stmt3->bindParam(':id', $id);
-    $stmt3->execute();
+      $q3 = "DELETE FROM orders WHERE game_id = :id";
+      $stmt3 = $this->conn->prepare($q3);
+      $stmt3->bindParam(':id', $id);
+      $stmt3->execute();
 
-    // Step 4: NOW delete the Game
-    $query = "DELETE FROM " . $this->table . " WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':id', $id);
-    
-    return $stmt->execute();
-}
+      $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(':id', $id);
+      
+      return $stmt->execute();
+   }
 }
 ?>
