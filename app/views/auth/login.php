@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - GameStore</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/reg-log.css">
 </head>
 <body>
-    
-    <nav>
-        <h1>GameStore</h1>
-        <a href="index.php?action=register">Register</a>
-    </nav>
 
-    <div class="container">
-        <div style="max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-            
-            <h2 style="text-align: center;">Login</h2>
+    <a href="index.php?action=home" class="shoplink">Home</a>
 
-            <?php if (isset($_GET['error'])): ?>
+    <div class="registerdiv">
+        <h2>Login</h2>
+        
+        <?php 
+        if(isset($_GET['status']) && $_GET['status'] == 'success') {
+            echo "<p style='color:#28a745; text-align:center; font-weight:bold; margin-bottom:15px;'>Registration successful! Please login.</p>";
+        }
+        ?>
+
+        <?php if (isset($_GET['error'])): ?>
                 <div style="background: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #f5c6cb; text-align: center;">
                     
                     <?php if ($_GET['error'] == 'invalid'): ?>
@@ -32,24 +35,16 @@
                     
                 </div>
             <?php endif; ?>
+
+        <form action="index.php?action=loginSubmit" method="POST">
+            <input type="email" name="email" placeholder="Email Address" required>
             
-            <form action="index.php?action=login" method="POST">
-                <label>Email Address</label>
-                <input type="email" name="email" placeholder="Enter your email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px;">
+            <input type="password" name="password" placeholder="Password" required>
 
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Enter your password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px;">
+            <button type="submit" class="btn">Login</button>
+        </form>
 
-                <button type="submit" style="width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
-                    Login
-                </button>
-            </form>
-
-            <p style="text-align: center; margin-top: 20px;">
-                Don't have an account? <a href="index.php?action=register">Register here</a>
-            </p>
-
-        </div>
+        <p style="color: #d3d3d3; margin-top: 10px;">Don't have an account? <a href="index.php?action=register" style="color: #28a745;">Register here</a></p>
     </div>
 
 </body>

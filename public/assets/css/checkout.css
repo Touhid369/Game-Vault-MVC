@@ -1,0 +1,551 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+   min-height: 100vh;
+   color: #e0e0e0;
+   padding-bottom: 50px;
+}
+
+/* Slideshow Backgrounds */
+body::before,
+body::after {
+   content: "";
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   z-index: -1;
+}
+
+body::before {
+   animation: slideshow1 40s infinite;
+}
+body::after {
+   animation: slideshow2 40s infinite;
+}
+
+@keyframes slideshow1 {
+   0% {
+      background-image: url("images/bg1.jpg");
+      opacity: 1;
+   }
+   22.5% {
+      background-image: url("images/bg1.jpg");
+      opacity: 1;
+   }
+   25% {
+      background-image: url("images/bg1.jpg");
+      opacity: 0;
+   }
+   47.5% {
+      background-image: url("images/bg1.jpg");
+      opacity: 0;
+   }
+   50% {
+      background-image: url("images/bg3.jpg");
+      opacity: 0;
+   }
+   72.5% {
+      background-image: url("images/bg3.jpg");
+      opacity: 1;
+   }
+   75% {
+      background-image: url("images/bg3.jpg");
+      opacity: 0;
+   }
+   100% {
+      background-image: url("images/bg3.jpg");
+      opacity: 0;
+   }
+}
+
+@keyframes slideshow2 {
+   0% {
+      background-image: url("images/bg2.jpg");
+      opacity: 0;
+   }
+   22.5% {
+      background-image: url("images/bg2.jpg");
+      opacity: 0;
+   }
+   25% {
+      background-image: url("images/bg2.jpg");
+      opacity: 1;
+   }
+   47.5% {
+      background-image: url("images/bg2.jpg");
+      opacity: 1;
+   }
+   50% {
+      background-image: url("images/bg2.jpg");
+      opacity: 0;
+   }
+   72.5% {
+      background-image: url("images/bg2.jpg");
+      opacity: 0;
+   }
+   75% {
+      background-image: url("images/bg4.jpg");
+      opacity: 1;
+   }
+   97.5% {
+      background-image: url("images/bg4.jpg");
+      opacity: 1;
+   }
+   100% {
+      background-image: url("images/bg4.jpg");
+      opacity: 0;
+   }
+}
+
+nav {
+   background: rgba(15, 15, 25, 0.95);
+   backdrop-filter: blur(10px);
+   padding: 20px 40px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+   position: sticky;
+   top: 0;
+   z-index: 100;
+}
+
+nav h1 {
+   color: #fff;
+   font-size: 28px;
+   font-weight: 600;
+   letter-spacing: 0.5px;
+}
+
+nav a {
+   color: #ff6b6b;
+   text-decoration: none;
+   padding: 10px 24px;
+   border: 2px solid #ff6b6b;
+   border-radius: 6px;
+   transition: all 0.3s ease;
+   font-weight: 500;
+}
+
+nav a:hover {
+   background: #ff6b6b;
+   color: white;
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.container {
+   max-width: 700px;
+   margin: 40px auto;
+   padding: 0 20px;
+}
+
+/* All white background divs */
+.container > div[style*="background: white"] {
+   background: linear-gradient(145deg, #252538 0%, #2a2a3e 100%) !important;
+   padding: 30px !important;
+   border-radius: 16px !important;
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+   border: 1px solid rgba(255, 255, 255, 0.1);
+   margin-bottom: 25px !important;
+}
+
+h2 {
+   color: #fff;
+   font-size: 26px;
+   margin-bottom: 20px;
+   font-weight: 600;
+}
+
+h3 {
+   color: #fff;
+   font-size: 20px;
+   margin-bottom: 20px;
+   font-weight: 600;
+}
+
+/* Order Summary Section */
+div[style*="display: flex"] {
+   display: flex !important;
+   gap: 20px !important;
+   align-items: center !important;
+   margin-bottom: 20px;
+}
+
+img[style*="width: 100px"] {
+   width: 100px !important;
+   height: 100px !important;
+   object-fit: cover !important;
+   border-radius: 8px !important;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+   transition: transform 0.3s ease;
+}
+
+img[style*="width: 100px"]:hover {
+   transform: scale(1.05);
+}
+
+div[style*="display: flex"] > div h3 {
+   color: #fff;
+   font-size: 22px;
+   margin-bottom: 8px;
+}
+
+div[style*="display: flex"] > div p {
+   color: #b8b8c8;
+   font-size: 14px;
+   line-height: 1.6;
+}
+
+hr {
+   border: none;
+   border-top: 1px solid rgba(255, 255, 255, 0.15);
+   margin: 20px 0;
+}
+
+/* Price Display */
+p {
+   color: #b8b8c8;
+   font-size: 15px;
+   margin: 10px 0;
+   line-height: 1.6;
+}
+
+p[style*="color: green"] {
+   color: #2ecc71 !important;
+   font-weight: 600;
+}
+
+span[style*="text-decoration: line-through"] {
+   text-decoration: line-through !important;
+   color: #888 !important;
+}
+
+h2[style*="margin-top"] {
+   color: #2ecc71;
+   font-size: 32px;
+   margin-top: 15px !important;
+   text-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+}
+
+/* Coupon Section */
+div[style*="background: #f1f1f1"] {
+   background: linear-gradient(145deg, #2d2d42 0%, #323248 100%) !important;
+   padding: 25px !important;
+   border-radius: 12px !important;
+   margin-bottom: 25px !important;
+   border: 2px dashed rgba(243, 156, 18, 0.4) !important;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+form[style*="margin: 0"] {
+   margin: 0 !important;
+   box-shadow: none !important;
+   background: transparent !important;
+   padding: 0 !important;
+}
+
+label[style*="font-weight: bold"] {
+   color: #f39c12 !important;
+   font-weight: 600 !important;
+   font-size: 16px;
+   display: block;
+   margin-bottom: 12px;
+}
+
+div[style*="display: flex; gap: 10px"] {
+   display: flex !important;
+   gap: 10px !important;
+   margin-top: 10px;
+}
+
+input[name="coupon_code"] {
+   padding: 12px 16px !important;
+   width: 250px !important;
+   background: rgba(255, 255, 255, 0.05);
+   border: 2px solid rgba(255, 255, 255, 0.1);
+   border-radius: 8px;
+   color: #fff;
+   font-size: 15px;
+   transition: all 0.3s ease;
+}
+
+input[name="coupon_code"]:focus {
+   outline: none;
+   border-color: #f39c12;
+   background: rgba(255, 255, 255, 0.08);
+   box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+}
+
+input[name="coupon_code"]::placeholder {
+   color: #666;
+}
+
+button[style*="background: #34495e"] {
+   background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%) !important;
+   padding: 12px 24px !important;
+   border: none;
+   border-radius: 8px;
+   color: white;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+button[style*="background: #34495e"]:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 6px 25px rgba(243, 156, 18, 0.5);
+}
+
+/* Coupon Messages */
+p[style*="color: red"] {
+   color: #ff6b6b !important;
+   margin-top: 10px !important;
+   font-size: 14px !important;
+   padding: 8px 12px;
+   background: rgba(255, 107, 107, 0.1);
+   border-radius: 6px;
+   border-left: 3px solid #ff6b6b;
+}
+
+p[style*="color: green"][style*="margin-top: 5px"] {
+   color: #2ecc71 !important;
+   margin-top: 10px !important;
+   font-size: 14px !important;
+   padding: 8px 12px;
+   background: rgba(46, 204, 113, 0.1);
+   border-radius: 6px;
+   border-left: 3px solid #2ecc71;
+}
+
+/* Payment Method Section */
+form[style*="box-shadow: none"] {
+   box-shadow: none !important;
+   padding: 0 !important;
+}
+
+label[style*="display:block"] {
+   display: block !important;
+   margin: 15px 0 !important;
+   cursor: pointer !important;
+   background: rgba(255, 255, 255, 0.05);
+   padding: 14px 18px;
+   border-radius: 8px;
+   border: 2px solid rgba(255, 255, 255, 0.1);
+   transition: all 0.3s ease;
+   color: #d0d0e0;
+   font-size: 15px;
+}
+
+label[style*="display:block"]:hover {
+   background: rgba(255, 255, 255, 0.08);
+   border-color: #4a90e2;
+   transform: translateX(5px);
+}
+
+input[type="radio"] {
+   margin-right: 12px;
+   cursor: pointer;
+   width: 18px;
+   height: 18px;
+   accent-color: #4a90e2;
+}
+
+img[style*="height: 20px"] {
+   height: 20px !important;
+   vertical-align: middle !important;
+   margin-right: 8px;
+}
+
+/* Payment Details Section */
+div[style*="margin-top: 20px; padding-top: 20px"] {
+   margin-top: 25px !important;
+   padding-top: 25px !important;
+   border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+label {
+   color: #d0d0e0;
+   display: block;
+   margin: 15px 0 8px;
+   font-weight: 500;
+   font-size: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+   background: rgba(255, 255, 255, 0.05);
+   border: 2px solid rgba(255, 255, 255, 0.1);
+   border-radius: 8px;
+   color: #fff;
+   font-size: 15px;
+   transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+   outline: none;
+   border-color: #4a90e2;
+   background: rgba(255, 255, 255, 0.08);
+   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+   color: #666;
+}
+
+input[style*="width: 100%"] {
+   width: 100% !important;
+   padding: 12px 16px !important;
+   margin-bottom: 15px !important;
+}
+
+input[style*="width: 100px"] {
+   width: 120px !important;
+   padding: 12px 16px !important;
+}
+
+input[type="hidden"] {
+   display: none;
+}
+
+/* Confirm Button */
+button[style*="background: #27ae60"] {
+   background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+   width: 100% !important;
+   font-size: 18px !important;
+   padding: 16px !important;
+   border: none;
+   border-radius: 8px;
+   color: white;
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+   margin-top: 10px;
+}
+
+button[style*="background: #27ae60"]:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 6px 25px rgba(46, 204, 113, 0.5);
+   background: linear-gradient(135deg, #27ae60 0%, #229954 100%) !important;
+}
+
+button[style*="background: #27ae60"]:active {
+   transform: translateY(0);
+}
+
+br {
+   display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+   nav {
+      padding: 15px 20px;
+   }
+
+   nav h1 {
+      font-size: 22px;
+   }
+
+   .container {
+      margin: 20px auto;
+   }
+
+   .container > div[style*="background: white"] {
+      padding: 25px !important;
+   }
+
+   div[style*="display: flex"] {
+      flex-direction: column;
+      align-items: flex-start !important;
+   }
+
+   img[style*="width: 100px"] {
+      width: 100% !important;
+      max-width: 200px !important;
+      height: auto !important;
+   }
+
+   input[name="coupon_code"] {
+      width: 100% !important;
+   }
+
+   div[style*="display: flex; gap: 10px"] {
+      flex-direction: column;
+      width: 100%;
+   }
+
+   button[style*="background: #34495e"] {
+      width: 100%;
+   }
+}
+
+@media (max-width: 480px) {
+   nav {
+      padding: 12px 15px;
+   }
+
+   nav h1 {
+      font-size: 20px;
+   }
+
+   nav a {
+      padding: 8px 16px;
+      font-size: 14px;
+   }
+
+   h2 {
+      font-size: 22px;
+   }
+
+   h3 {
+      font-size: 18px;
+   }
+
+   .container > div[style*="background: white"] {
+      padding: 20px !important;
+   }
+
+   input[style*="width: 100px"] {
+      width: 100% !important;
+   }
+}
+
+/* Smooth scroll */
+html {
+   scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+   width: 10px;
+}
+
+::-webkit-scrollbar-track {
+   background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}

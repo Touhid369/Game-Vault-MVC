@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Checkout - GameStore</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/checkout.css">
 </head>
 <body>
     <nav>
@@ -12,7 +12,7 @@
 
     <div class="container">
         
-        <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <div style="background: #38384ada; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <h2>Order Summary</h2>
             <div style="display: flex; gap: 20px; align-items: center;">
                 <img src="uploads/images/<?php echo $game['image_path']; ?>" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
@@ -35,8 +35,8 @@
         </div>
 
         <?php if(!isset($discount) || $discount == 0): ?>
-            <div style="background: #f1f1f1; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed #ccc;">
-                <form action="index.php?action=apply_coupon" method="POST" style="margin: 0; box-shadow: none; background: transparent; padding: 0;">
+            <div style="background: #38384ada; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed #ccc;">
+                <form action="index.php?action=applyCoupon" method="POST" style="margin: 0; box-shadow: none; background: transparent; padding: 0;">
                     <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
                     
                     <label style="font-weight: bold;">Have a Coupon?</label>
@@ -56,7 +56,7 @@
             </div>
         <?php endif; ?>
 
-        <div style="background: white; padding: 20px; border-radius: 8px;">
+        <div style="background: #38384ada; padding: 20px; border-radius: 8px;">
             <h3>Select Payment Method</h3>
             <form action="index.php?action=confirm_purchase" method="POST" style="box-shadow: none; padding: 0;">
                 <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">

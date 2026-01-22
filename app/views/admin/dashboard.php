@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Admin Dashboard - GameStore</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/adminDashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -24,7 +24,7 @@
 
         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
             
-            <div style="flex: 1; background: white; padding: 20px; border-radius: 8px; min-width: 300px;">
+            <div style="background-color: #2c3e50d5; border-radius: 10px; padding: 10px 20px;">
                 <h2>Manage Users</h2>
                 <table border="1" cellpadding="10" style="width: 100%; border-collapse: collapse; border-color: #eee;">
                     <thead>
@@ -66,7 +66,7 @@
                 </table>
             </div>
 
-            <div style="flex: 1.5; background: white; padding: 20px; border-radius: 8px; min-width: 400px;">
+            <div style="background-color: #2c3e50d5; border-radius: 10px; padding: 10px 20px;">
                 <h2>Manage Games</h2>
                 
                 <?php if(isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>

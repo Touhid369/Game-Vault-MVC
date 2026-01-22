@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Game Details</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/game_details.css">
     <style>
         .review-box { border-bottom: 1px solid #ddd; padding: 10px 0; }
         .stars { color: #f1c40f; font-weight: bold; }
@@ -15,7 +15,7 @@
     </nav>
 
     <div class="container">
-        <div style="background: white; padding: 20px; border-radius: 8px; display: flex; gap: 20px;">
+        <div style="padding: 20px; border-radius: 8px; display: flex; gap: 20px;">
             <img src="uploads/images/<?php echo $game['image_path']; ?>" style="width: 300px; height: 200px; object-fit: cover;">
             
             <div>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <br><hr><br>
+        <hr>
 
         <h3>Customer Reviews</h3>
         

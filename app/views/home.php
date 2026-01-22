@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>GameStore - Home</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
     
@@ -46,7 +46,7 @@
                 <?php foreach($games as $game): ?>
                     <div class="game-card">
                         <?php if(!empty($game['image_path'])): ?>
-                            <img src="uploads/images/<?php echo $game['image_path']; ?>" class="game-img" alt="<?php echo $game['title']; ?>">
+                            <img style="border-radius: 10px;" width="300px" src="uploads/images/<?php echo $game['image_path']; ?>" class="game-img" alt="<?php echo $game['title']; ?>">
                         <?php else: ?>
                             <div style="height:180px; background:#ddd; display:flex; align-items:center; justify-content:center; color:#555;">
                                 No Image
@@ -54,33 +54,33 @@
                         <?php endif; ?>
 
                         <div class="card-body">
-                        <h3><a href="index.php?action=details&id=<?php echo $game['id']; ?>"><?php echo $game['title']; ?></a></h3>
-                            <p class="price">$<?php echo number_format($game['price'], 2); ?></p>
+                           <h3><a href="index.php?action=details&id=<?php echo $game['id']; ?>"><?php echo $game['title']; ?></a></h3>
+                           <p class="price">$<?php echo number_format($game['price'], 2); ?></p>
                             
-                            <div style="margin-top: 10px;">
-                                <?php if(!empty($game['demo_file_path'])): ?>
-                                    <a href="uploads/demos/<?php echo $game['demo_file_path']; ?>" class="btn" style="background:#95a5a6; font-size:12px; padding: 5px 10px;" download>
-                                        Download Demo
-                                    </a>
-                                <?php endif; ?>
-                                
-                                <br><br>
+                           <div style="margin-top: 10px;">
+                              <?php if(!empty($game['demo_file_path'])): ?>
+                                 <a href="uploads/demos/<?php echo $game['demo_file_path']; ?>" class="btn" style="background:#95a5a6; font-size:12px; padding: 5px 10px;" download>
+                                       Download Demo
+                                 </a>
+                              <?php endif; ?>
+                              
+                              <br><br>
 
-                                <?php if(isset($_SESSION['user_id'])): ?>
-                                    <?php if($_SESSION['role'] == 'buyer'): ?>
-                                        <a href="index.php?action=checkout&id=<?php echo $game['id']; ?>">
-                                            <button>Buy Now</button>
-                                        </a>
-                                        <a href="index.php?action=add_wishlist&id=<?php echo $game['id']; ?>" style="margin-left:5px; color:#e74c3c; font-size:20px; text-decoration:none;" title="Add to Wishlist">
-                                         ❤
-                                        </a>
-                                    <?php endif; ?>
-                                <?php else: ?>
-                                    <a href="index.php?action=login">
-                                        <button>Login to Buy</button>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
+                              <?php if(isset($_SESSION['user_id'])): ?>
+                                 <?php if($_SESSION['role'] == 'buyer'): ?>
+                                       <a href="index.php?action=checkout&id=<?php echo $game['id']; ?>">
+                                          <button>Buy Now</button>
+                                       </a>
+                                       <a href="index.php?action=add_wishlist&id=<?php echo $game['id']; ?>" style="margin-left:5px; color:#e74c3c; font-size:20px; text-decoration:none;" title="Add to Wishlist">
+                                       ❤
+                                       </a>
+                                 <?php endif; ?>
+                              <?php else: ?>
+                                 <a href="index.php?action=login">
+                                       <button>Login to Buy</button>
+                                 </a>
+                              <?php endif; ?>
+                           </div>
                         </div>
                     </div>
                 <?php endforeach; ?>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>My Wishlist</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/wishlist.css">
 </head>
 <body>
     <nav>
